@@ -33,13 +33,14 @@ sum = function(variable){
   )
 }
 
-map(body_df, sum) %>% 
+table=map(body_df, sum) %>% 
   bind_rows() %>% 
   mutate(variable = names(body_df)) %>% 
   select(variable,everything()) %>% 
   filter(variable!="id") %>%
   knitr::kable(digits = 2, 
-               caption = "Descriptive statistics of continuous variables")
+               caption = "Descriptive statistics of continuous variables") 
+
 
 ```
 
@@ -48,7 +49,7 @@ map(body_df, sum) %>%
 body_df %>% 
 select(-bodyfat_siri) %>% 
 cor() ## Correlation coefficient
-corrplot(cor(body_df), type = "upper", diag = FALSE)
+corr=corrplot(cor(body_df), type = "upper", diag = FALSE)
 ```
 
 ```{r  check outcome variable}
