@@ -48,7 +48,7 @@ map(body_df, sum) %>%
 body_df %>% 
 select(-id, -bodyfat_siri) %>% 
 cor() ## Correlation coefficient
-corrplot(cor(cor_df), type = "upper", diag = FALSE)
+corrplot(cor(body_df), type = "upper", diag = FALSE)
 ```
 
 ```{r  check outcome variable}
