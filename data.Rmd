@@ -16,7 +16,7 @@ library(corrplot)
 ```{r import data}
 body_df=read_excel("data/body_density_data.xlsx") %>%
   janitor::clean_names() %>%
-  select(-bodyfat_brozek,-body_density)
+  select(-bodyfat_brozek,-body_density,-id)
 ```
 
 ```{r descriptive stat}
@@ -46,7 +46,7 @@ map(body_df, sum) %>%
 ```{r correlation}
 # check collinearity
 body_df %>% 
-select(-id, -bodyfat_siri) %>% 
+select(-bodyfat_siri) %>% 
 cor() ## Correlation coefficient
 corrplot(cor(body_df), type = "upper", diag = FALSE)
 ```
@@ -57,7 +57,7 @@ boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
 ```
 
 ```{r}
-body_df%>% select(-id,-bodyfat_siri)%>%
+body_df%>% select(-bodyfat_siri)%>%
   funModeling::plot_num()
 
 ```
