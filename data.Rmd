@@ -6,6 +6,58 @@ date: "2022-12-14"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(readxl)
+library(corrplot)
 ```
 
 
+```{r import data}
+body_df=read_excel("data/body_density_data.xlsx") %>%
+  janitor::clean_names() %>%
+  select(-bodyfat_brozek,-body_density)
+```
+
+```{r descriptive stat}
+# all are continuous data
+
+sum = function(variable){
+  tibble(
+    mean = mean(variable),
+    sd = sd(variable),
+    median = median(variable),
+    maximum = max(variable),
+    minimum = min(variable),
+    IQR = IQR(variable)
+  )
+}
+
+map(body_df, sum) %>% 
+  bind_rows() %>% 
+  mutate(variable = names(body_df)) %>% 
+  select(variable,everything()) %>% 
+  filter(variable!="id") %>%
+  knitr::kable(digits = 2, 
+               caption = "Descriptive statistics of continuous variables")
+
+```
+
+```{r correlation}
+# check collinearity
+body_df %>% 
+select(-id, -bodyfat_siri) %>% 
+cor() ## Correlation coefficient
+corrplot(cor(cor_df), type = "upper", diag = FALSE)
+```
+
+```{r  check outcome variable}
+boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
+
+```
+
+```{r}
+body_df%>% select(-id,-bodyfat_siri)%>%
+  funModeling::plot_num()
+
+```
