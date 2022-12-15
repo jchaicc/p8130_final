@@ -149,4 +149,9 @@ h_trans = bf_predictors %>%
 hist(h_trans[,1], main = paste("Hist. of", "height", sep = " "), xlab = "height")
 shapiro.test(h_trans$height) 
 ```
-Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened, so we still use the untransformed value of "height" to participate in the subsequent calculation.
+Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened, so we still use the untransformed value of "height" to participate in the subsequent calculation. Use automatic procedures (Stepwise Regression) to find a ‘best subset’of the full model. Present the results and comment on the following:
+```{r}
+step.fit = lm(bodyfat_siri ~ ., data = bf_data)
+step(step.fit, direction = "both")
+```
+The model we obtained is bodyfat_siri = 5.60733 + 0.07543 * age - 0.28925 * height - 0.58137 * neck + 0.77409 * abdomen + 0.51691 * forearm + -1.85861 * wrist.

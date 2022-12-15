@@ -230,3 +230,119 @@ rbind(s.t_age, s.t_height, s.t_neck, s.t_abdomen, s.t_knee, s.t_ankle, s.t_bicep
     ## s.t_bicep   "bf_predictors$bicep"  
     ## s.t_forearm "bf_predictors$forearm"
     ## s.t_wrist   "bf_predictors$wrist"
+
+The conclusion was confirmed by the results of Shapiro-Wilk normality
+test, showing that the p-value of “height” is greater than 0.05, the
+p-values of “wrist” is slightly greater than 0.05, and the p-values of
+other predictors are smaller than 0.05. Among which, the p-values of
+“bicep” are “wrist” are close to 0.05 from the left. Therefore, I tried
+exponential transformations on the variables “height”.
+
+``` r
+h_trans = bf_predictors %>% 
+  select(2) %>%
+  exp()
+hist(h_trans[,1], main = paste("Hist. of", "height", sep = " "), xlab = "height")
+```
+
+![](data_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+shapiro.test(h_trans$height) 
+```
+
+    ## 
+    ##  Shapiro-Wilk normality test
+    ## 
+    ## data:  h_trans$height
+    ## W = 0.1389, p-value < 2.2e-16
+
+Although the converted p-value is less than 0.05, the normality of the
+distribution shown in the histogram is weakened, so we still use the
+untransformed value of “height” to participate in the subsequent
+calculation. Use automatic procedures (Stepwise Regression) to find a
+’best subset’of the full model. Present the results and comment on the
+following:
+
+``` r
+step.fit = lm(bodyfat_siri ~ ., data = bf_data)
+step(step.fit, direction = "both")
+```
+
+    ## Start:  AIC=752.42
+    ## bodyfat_siri ~ age + height + neck + abdomen + knee + ankle + 
+    ##     bicep + forearm + wrist
+    ## 
+    ##           Df Sum of Sq    RSS    AIC
+    ## - knee     1       1.3 4610.6 750.49
+    ## - ankle    1       1.8 4611.1 750.51
+    ## - bicep    1       9.9 4619.2 750.95
+    ## <none>                 4609.3 752.42
+    ## - height   1      81.6 4690.9 754.84
+    ## - forearm  1     107.6 4716.9 756.23
+    ## - neck     1     148.6 4757.9 758.41
+    ## - age      1     175.8 4785.1 759.85
+    ## - wrist    1     250.5 4859.9 763.75
+    ## - abdomen  1    4612.4 9221.8 925.17
+    ## 
+    ## Step:  AIC=750.49
+    ## bodyfat_siri ~ age + height + neck + abdomen + ankle + bicep + 
+    ##     forearm + wrist
+    ## 
+    ##           Df Sum of Sq     RSS    AIC
+    ## - ankle    1       1.2  4611.8 748.55
+    ## - bicep    1       9.1  4619.7 748.98
+    ## <none>                  4610.6 750.49
+    ## + knee     1       1.3  4609.3 752.42
+    ## - height   1     105.5  4716.1 754.19
+    ## - forearm  1     106.6  4717.2 754.25
+    ## - neck     1     147.7  4758.3 756.43
+    ## - age      1     176.8  4787.4 757.97
+    ## - wrist    1     257.2  4867.8 762.17
+    ## - abdomen  1    5884.6 10495.2 955.77
+    ## 
+    ## Step:  AIC=748.55
+    ## bodyfat_siri ~ age + height + neck + abdomen + bicep + forearm + 
+    ##     wrist
+    ## 
+    ##           Df Sum of Sq     RSS    AIC
+    ## - bicep    1       9.5  4621.2 747.07
+    ## <none>                  4611.8 748.55
+    ## + ankle    1       1.2  4610.6 750.49
+    ## + knee     1       0.7  4611.1 750.51
+    ## - height   1     104.5  4716.3 752.19
+    ## - forearm  1     106.5  4718.3 752.30
+    ## - neck     1     149.6  4761.4 754.60
+    ## - age      1     179.4  4791.2 756.17
+    ## - wrist    1     275.2  4887.0 761.15
+    ## - abdomen  1    6087.1 10698.9 958.61
+    ## 
+    ## Step:  AIC=747.07
+    ## bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist
+    ## 
+    ##           Df Sum of Sq     RSS    AIC
+    ## <none>                  4621.2 747.07
+    ## + bicep    1       9.5  4611.8 748.55
+    ## + ankle    1       1.5  4619.7 748.98
+    ## + knee     1       0.1  4621.1 749.06
+    ## - height   1     103.7  4724.9 750.66
+    ## - neck     1     140.4  4761.6 752.61
+    ## - forearm  1     146.5  4767.7 752.93
+    ## - age      1     170.1  4791.3 754.17
+    ## - wrist    1     267.0  4888.3 759.22
+    ## - abdomen  1    7028.1 11649.3 978.06
+
+    ## 
+    ## Call:
+    ## lm(formula = bodyfat_siri ~ age + height + neck + abdomen + forearm + 
+    ##     wrist, data = bf_data)
+    ## 
+    ## Coefficients:
+    ## (Intercept)          age       height         neck      abdomen      forearm  
+    ##     5.60733      0.07543     -0.28925     -0.58137      0.77409      0.51691  
+    ##       wrist  
+    ##    -1.85861
+
+The model we obtained is bodyfat_siri = 5.60733 + 0.07543 \* age -
+0.28925 \* height - 0.58137 \* neck + 0.77409 \* abdomen + 0.51691 \*
+forearm + -1.85861 \* wrist.
