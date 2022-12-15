@@ -51,7 +51,7 @@ table
 body_corr=
 body_df %>% 
 cor() 
-png(height=1800,width=1800,file="plots/corr.png",type="cairo")
+png(file="plots/corr.png",type="cairo")
 corr=corrplot(cor(body_corr), 
          method = "color", 
          type = "upper",
@@ -77,7 +77,10 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
  theme_bw()
 
 
+```
 
+```{r}
+png(file="plots/age.png",type="cairo")
 interactions::interact_plot(update(mult.fit, . ~ . + age*wrist),pred = wrist, modx = age)
 
 ```
