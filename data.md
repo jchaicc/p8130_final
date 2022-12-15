@@ -49,12 +49,12 @@ corr=corrplot(cor(body_corr),
 ``` r
 #Raw VIF
 mult.fit <- lm(bodyfat_siri ~ .,data = body_df)
-vif_values <- vif(mult.fit)
-v_names <- str_to_title (names(vif_values))
-vif_df <- 
-  tibble(variable = v_names, vif = vif_values) %>%
-  mutate(variable = fct_reorder(variable,vif))
-ggplot(data = vif_df,aes(y = variable, x = vif_values)) +
+vif_val <- vif(mult.fit)
+name <- str_to_title (names(vif_val))
+vifdf <- 
+  tibble(variable = name, vif = vif_val) %>%
+  mutate(variable = fct_reorder(variable,vif_val))
+ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_col() +
   geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
  theme_bw()
@@ -103,15 +103,15 @@ bodyvf_data=body_df %>%
 select(-weight,-hip,-chest,-thigh) 
 
 mult.fit2 <- lm(bodyfat_siri ~ .,data = bodyvf_data)
-vif_values <- vif(mult.fit2)
-v_names <- str_to_title (names(vif_values))
-vif_df <- 
-  tibble(variable = v_names, vif = vif_values) %>%
-  mutate(variable = fct_reorder(variable,vif))
-ggplot(data = vif_df,aes(y = variable, x = vif_values)) +
+vif_val <- vif(mult.fit2)
+name <- str_to_title (names(vif_val))
+vifdf <- 
+  tibble(variable = name, vif = vif_val) %>%
+  mutate(variable = fct_reorder(variable,vif_val))
+ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_col() +
   geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
-  theme_bw() 
+ theme_bw()
 ```
 
 ![](data_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
