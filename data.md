@@ -258,10 +258,10 @@ shapiro.test(h_trans$height)
     ## W = 0.1389, p-value < 2.2e-16
 
 Although the converted p-value is less than 0.05, the normality of the
-distribution shown in the histogram is weakened, so we still use the
-untransformed value of “height” to participate in the subsequent
-calculation. Use automatic procedures to find a ’best subset’of the full
-model. Present the results and comment on the following:
+distribution shown in the histogram is weakened apparently, so we still
+use the untransformed original value of “height” to participate in the
+subsequent calculation. We used automatic procedures as followed to find
+a ’best subset’of the full model.
 
 ``` r
 step.fit = lm(bodyfat_siri ~ ., data = bf_data)
@@ -355,4 +355,15 @@ par(mfrow = c(2,2))
 plot(fit1)
 ```
 
-![](data_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](data_files/figure-gfm/unnamed-chunk-8-1.png)<!-- --> As shown in the
+Residuals vs Fitted plot, residual values bounce around 0 and residuals
+form a generally horizontal (linear) ‘band’ around zero, showing no
+unequal error variance (heteroscedasticity). \*\*\* stands out from the
+random pattern and causes the plot to shift downward, which makes it a
+potential outlier. According to the QQ plot, the plot is almost
+straight, showing a nice normality. \*\*\* stands out again from the
+random pattern. The Scale-location plot is almost a horizontal line with
+equally spread points, confirming the assumption of equal variance. In
+the Residuals vs Leverage plot, \*\*\* appears to be an outlying value
+at the upper right corner, being close to the edge at the Cook’s
+distance.So our model maybe couldn’t explain \*\*\* very well.
