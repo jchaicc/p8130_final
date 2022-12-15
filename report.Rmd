@@ -35,5 +35,7 @@ After obtaining the model that we have chosen, several plots will be made to che
 
 A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
 
-
+<center>
+<img src="plots/corr.png" height="600px" width="1000px" />
+</center>
 

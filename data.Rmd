@@ -74,6 +74,11 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_col() +
   geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
  theme_bw()
+
+
+
+interactions::interact_plot(update(mult.fit, . ~ . + age*wrist),pred = wrist, modx = age)
+
 ```
 
 
@@ -84,7 +89,7 @@ summary(raw_fit)
 
 ```{r}
 bf_data=body_df %>%
-select(-weight,-hip,-chest,-thigh) %>%view()
+select(-weight,-hip,-chest,-thigh) 
 write_csv(bf_data,"data/bf_data.csv")
 
 mult.fit2 <- lm(bodyfat_siri ~ .,data = bf_data)
