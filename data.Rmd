@@ -79,7 +79,6 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
 
 ```
 
-
 ```{r}
 raw_fit=lm(bodyfat_siri~.,data=body_df)
 summary(raw_fit)
@@ -110,6 +109,12 @@ boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
 ```
 
 ```{r}
-body_df%>% select(-bodyfat_siri)%>%
+body_df %>% select(-bodyfat_siri)%>%
   funModeling::plot_num()
 ```
+
+```{r}
+bf_data = read_csv("./data/bf_data.csv")
+
+```
+
