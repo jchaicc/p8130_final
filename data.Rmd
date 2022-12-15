@@ -80,8 +80,7 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
 ```
 
 ```{r}
-png(file="plots/age.png",type="cairo")
-interactions::interact_plot(update(mult.fit, . ~ . + age*wrist),pred = wrist, modx = age)
+
 
 ```
 
