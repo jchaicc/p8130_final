@@ -10,7 +10,7 @@ Body fat is an important factor in many medical situations. Measuring body fat c
 
 # Introduction
 
- A normal body fat is between 25 and 30 percent in women and 18 and 23 percent in men [1]. More than 68% of US adults are considered overweight, and 35% are obese [2]. While the number of people who are overweight or obese are gradually increasing, more people are becoming more concerned about this issue. The goal of this project is to predict the body fat in different patients based on their physical measurements.
+ A normal body fat is between 25 and 30 percent in women and 18 and 23 percent in men [1]. More than 68% of US adults are considered overweight, and 35% are obese [2]. While the number of people who are overweight or obese are gradually increasing, more people are becoming more concerned about this issue. The goal of this project is to predict the body fat in different patients based on their physical measurements. 
  
 # Methods
 
@@ -21,13 +21,15 @@ The goal of this part is to have a sense of the distribution of each variables.C
 
 ## _Model Selection_ 
 
-In order to select the most appropriate model, we applied forward, backward, and stepwise selection for comparasion. 
+In order to select the most appropriate model, we applied stepwise selection for comparasion. 
 
 ## _Model interaction-
 
-### _Model Diagnostics_  (need compare?)
 
-After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the resduals vs leverage plot and also calculating the Cook's distance , which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. VIF again?
+
+### _Model Diagnostics_  (need compare?) 
+
+After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance , which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. VIF again?
 
 ## _Cross-Validation (need compare?)_
 

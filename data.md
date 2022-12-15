@@ -99,10 +99,11 @@ summary(raw_fit)
     ## F-statistic:  54.5 on 13 and 238 DF,  p-value: < 2.2e-16
 
 ``` r
-bodyvf_data=body_df %>%
+bf_data=body_df %>%
 select(-weight,-hip,-chest,-thigh) 
+write_csv(bf_data,"data/bf_data.csv")
 
-mult.fit2 <- lm(bodyfat_siri ~ .,data = bodyvf_data)
+mult.fit2 <- lm(bodyfat_siri ~ .,data = bf_data)
 vif_val <- vif(mult.fit2)
 name <- str_to_title (names(vif_val))
 vifdf <- 
