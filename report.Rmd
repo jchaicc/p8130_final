@@ -2,6 +2,8 @@
 title: "Predicting Body Fat Applying Multivariable Linear Regression"
 author: "Jingchen Chai, Ruihan Zhang, Wenjia Zhu"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Abstract
@@ -34,5 +36,4 @@ After obtaining the model that we have chosen, several plots will be made to che
 ## _Cross-Validation (need compare?)_
 
 A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
-
 
