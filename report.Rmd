@@ -23,13 +23,13 @@ The goal of this part is to have a sense of the distribution of each variables.C
 
 In order to select the most appropriate model, we applied forward, backward, and stepwise selection for comparasion. 
 
-## _Model interaction? 
+## _Model interaction-
 
 ### _Model Diagnostics_  (need compare?)
 
 After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the resduals vs leverage plot and also calculating the Cook's distance , which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. VIF again?
 
-##Cross-Validation (need compare?)
+## Cross-Validation (need compare?)
 
 A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
 
