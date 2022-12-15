@@ -149,7 +149,8 @@ h_trans = bf_predictors %>%
 hist(h_trans[,1], main = paste("Hist. of", "height", sep = " "), xlab = "height")
 shapiro.test(h_trans$height) 
 ```
-Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened, so we still use the untransformed value of "height" to participate in the subsequent calculation. Use automatic procedures to find a ‘best subset’of the full model. Present the results and comment on the following:
+Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened apparently, so we still use the untransformed original value of "height" to participate in the subsequent calculation. 
+We used automatic procedures as followed to find a ‘best subset’of the full model. 
 ```{r}
 step.fit = lm(bodyfat_siri ~ ., data = bf_data)
 step(step.fit, direction = "both")
