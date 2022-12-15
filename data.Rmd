@@ -141,4 +141,12 @@ s.t_wrist <- shapiro.test(bf_predictors$wrist)
 rbind(s.t_age, s.t_height, s.t_neck, s.t_abdomen, s.t_knee, s.t_ankle, s.t_bicep, s.t_forearm, s.t_wrist) 
 ```
 The conclusion was confirmed by the results of Shapiro-Wilk normality test, showing that the p-value of "height" is greater than 0.05, the p-values of "wrist" is slightly greater than 0.05, and the p-values of other predictors are smaller than 0.05. Among which, the p-values of "bicep" are "wrist" are close to 0.05 from the left.
-Therefore, I tried natural logarithm transformations on the variables "height".
+Therefore, I tried exponential transformations on the variables "height".
+```{r}
+h_trans = bf_predictors %>% 
+  select(2) %>%
+  exp()
+hist(h_trans[,1], main = paste("Hist. of", "height", sep = " "), xlab = "height")
+shapiro.test(h_trans$height) 
+```
+Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened, so we still use the untransformed value of "height" to participate in the subsequent calculation.
