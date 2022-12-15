@@ -79,11 +79,6 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
 
 ```
 
-```{r}
-
-
-```
-
 
 ```{r}
 raw_fit=lm(bodyfat_siri~.,data=body_df)
