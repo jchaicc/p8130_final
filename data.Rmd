@@ -128,28 +128,17 @@ bf_predictors = bf_data %>%
          wrist = as.numeric(wrist),
          )
 
-shapiro.test(bf_predictors$age) 
-shapiro.test(bf_predictors$height) 
-shapiro.test(bf_predictors$neck) 
-shapiro.test(bf_predictors$abdomen) 
-shapiro.test(bf_predictors$knee) 
-shapiro.test(bf_predictors$ankle) 
-shapiro.test(bf_predictors$bicep) 
-shapiro.test(bf_predictors$forearm) 
-shapiro.test(bf_predictors$wrist) 
+s.t_age <- shapiro.test(bf_predictors$age) 
+s.t_height <- shapiro.test(bf_predictors$height) 
+s.t_neck <- shapiro.test(bf_predictors$neck) 
+s.t_abdomen <- shapiro.test(bf_predictors$abdomen) 
+s.t_knee <- shapiro.test(bf_predictors$knee) 
+s.t_ankle <- shapiro.test(bf_predictors$ankle) 
+s.t_bicep <- shapiro.test(bf_predictors$bicep) 
+s.t_forearm <- shapiro.test(bf_predictors$forearm) 
+s.t_wrist <- shapiro.test(bf_predictors$wrist) 
 
-a <- colnames(bf_predictors)[1:9] 
-
-for (i in 1:length(a)) { 
-  sub = bf_predictors[a[i]][,1]
-  
-  if (i == 1) {
-     s.t <- shapiro.test(sub) 
-   } else {
-     s.t <- rbind(s.t, shapiro.test(sub)) 
- }
-}
-s.t <- cbind(a, s.t)    
-s.t
+rbind(s.t_age, s.t_height, s.t_neck, s.t_abdomen, s.t_knee, s.t_ankle, s.t_bicep, s.t_forearm, s.t_wrist) 
 ```
-
+The conclusion was confirmed by the results of Shapiro-Wilk normality test, showing that the p-value of "height" is greater than 0.05, the p-values of "wrist" is slightly greater than 0.05, and the p-values of other predictors are smaller than 0.05. Among which, the p-values of "bicep" are "wrist" are close to 0.05 from the left.
+Therefore, I tried natural logarithm transformations on the variables "height".

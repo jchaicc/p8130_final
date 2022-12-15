@@ -29,13 +29,51 @@ table=map(body_df, sum) %>%
   filter(variable!="id") %>%
   knitr::kable(digits = 2, 
                caption = "Descriptive statistics of continuous variables") 
+
+table
 ```
+
+| variable     |   mean |    sd | median | maximum | minimum |   IQR |
+|:-------------|-------:|------:|-------:|--------:|--------:|------:|
+| bodyfat_siri |  19.15 |  8.37 |  19.20 |   47.50 |     0.0 | 12.83 |
+| age          |  44.88 | 12.60 |  43.00 |   81.00 |    22.0 | 18.25 |
+| weight       | 178.92 | 29.39 | 176.50 |  363.15 |   118.5 | 38.00 |
+| height       |  70.31 |  2.61 |  70.00 |   77.75 |    64.0 |  4.00 |
+| neck         |  37.99 |  2.43 |  38.00 |   51.20 |    31.1 |  3.02 |
+| chest        | 100.82 |  8.43 |  99.65 |  136.20 |    79.3 | 11.02 |
+| abdomen      |  92.56 | 10.78 |  90.95 |  148.10 |    69.4 | 14.75 |
+| hip          |  99.90 |  7.16 |  99.30 |  147.70 |    85.0 |  8.03 |
+| thigh        |  59.41 |  5.25 |  59.00 |   87.30 |    47.2 |  6.35 |
+| knee         |  38.59 |  2.41 |  38.50 |   49.10 |    33.0 |  2.95 |
+| ankle        |  23.10 |  1.69 |  22.80 |   33.90 |    19.1 |  2.00 |
+| bicep        |  32.27 |  3.02 |  32.05 |   45.00 |    24.8 |  4.12 |
+| forearm      |  28.66 |  2.02 |  28.70 |   34.90 |    21.0 |  2.70 |
+| wrist        |  18.23 |  0.93 |  18.30 |   21.40 |    15.8 |  1.20 |
+
+Descriptive statistics of continuous variables
 
 ``` r
 # check multicollinearity
 body_corr=
 body_df %>% 
 cor() 
+png(file="plots/corr.png",type="cairo")
+```
+
+    ## Warning in grSoftVersion(): 无法载入共享目标对象‘/Library/Frameworks/R.framework/Resources/modules//R_X11.so’：:
+    ##   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 0x0006): Library not loaded: /opt/X11/lib/libSM.6.dylib
+    ##   Referenced from: <FF564E7B-F7DD-3BAE-972C-DE65F8735FC9> /Library/Frameworks/R.framework/Versions/4.2/Resources/modules/R_X11.so
+    ##   Reason: tried: '/opt/X11/lib/libSM.6.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/X11/lib/libSM.6.dylib' (no such file), '/opt/X11/lib/libSM.6.dylib' (no such file), '/Library/Frameworks/R.framework/Resources/lib/libSM.6.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/jre/lib/server/libSM.6.dylib' (no such file)
+
+    ## Warning in cairoVersion(): 无法载入共享目标对象‘/Library/Frameworks/R.framework/Resources/library/grDevices/libs//cairo.so’：:
+    ##   dlopen(/Library/Frameworks/R.framework/Resources/library/grDevices/libs//cairo.so, 0x0006): Library not loaded: /opt/X11/lib/libXrender.1.dylib
+    ##   Referenced from: <852A22BA-53CF-3903-BFD0-B69D70D5FDC6> /Library/Frameworks/R.framework/Versions/4.2/Resources/library/grDevices/libs/cairo.so
+    ##   Reason: tried: '/opt/X11/lib/libXrender.1.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/X11/lib/libXrender.1.dylib' (no such file), '/opt/X11/lib/libXrender.1.dylib' (no such file), '/Library/Frameworks/R.framework/Resources/lib/libXrender.1.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/jre/lib/server/libXrender.1.dylib' (no such file)
+
+    ## Warning in png(file = "plots/corr.png", type = "cairo"): failed to load cairo
+    ## DLL
+
+``` r
 corr=corrplot(cor(body_corr), 
          method = "color", 
          type = "upper",
@@ -124,13 +162,71 @@ boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
 ![](data_files/figure-gfm/check%20outcome%20variable-1.png)<!-- -->
 
 ``` r
-body_df%>% select(-bodyfat_siri)%>%
+body_df %>% select(-bodyfat_siri)%>%
   funModeling::plot_num()
 ```
 
-    ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
-    ## of ggplot2 3.3.4.
-    ## ℹ The deprecated feature was likely used in the funModeling package.
-    ##   Please report the issue at <]8;;https://github.com/pablo14/funModeling/issueshttps://github.com/pablo14/funModeling/issues]8;;>.
+    ## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
+    ## "none")` instead.
 
 ![](data_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
+bf_data = read_csv("./data/bf_data.csv") 
+```
+
+    ## Rows: 252 Columns: 10
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## dbl (10): bodyfat_siri, age, height, neck, abdomen, knee, ankle, bicep, fore...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+bf_predictors = bf_data %>% 
+  select(-bodyfat_siri) %>% 
+  mutate(age = as.numeric(age),
+         height = as.numeric(height),
+         neck = as.numeric(neck),
+         abdomen = as.numeric(abdomen),
+         knee = as.numeric(knee),
+         ankle = as.numeric(ankle),
+         bicep = as.numeric(bicep),
+         forearm = as.numeric(forearm),
+         wrist = as.numeric(wrist),
+         )
+
+s.t_age <- shapiro.test(bf_predictors$age) 
+s.t_height <- shapiro.test(bf_predictors$height) 
+s.t_neck <- shapiro.test(bf_predictors$neck) 
+s.t_abdomen <- shapiro.test(bf_predictors$abdomen) 
+s.t_knee <- shapiro.test(bf_predictors$knee) 
+s.t_ankle <- shapiro.test(bf_predictors$ankle) 
+s.t_bicep <- shapiro.test(bf_predictors$bicep) 
+s.t_forearm <- shapiro.test(bf_predictors$forearm) 
+s.t_wrist <- shapiro.test(bf_predictors$wrist) 
+
+rbind(s.t_age, s.t_height, s.t_neck, s.t_abdomen, s.t_knee, s.t_ankle, s.t_bicep, s.t_forearm, s.t_wrist) 
+```
+
+    ##             statistic p.value      method                       
+    ## s.t_age     0.9794571 0.001043298  "Shapiro-Wilk normality test"
+    ## s.t_height  0.9925544 0.2371726    "Shapiro-Wilk normality test"
+    ## s.t_neck    0.9708168 4.914854e-05 "Shapiro-Wilk normality test"
+    ## s.t_abdomen 0.9657307 9.831292e-06 "Shapiro-Wilk normality test"
+    ## s.t_knee    0.9824131 0.003303666  "Shapiro-Wilk normality test"
+    ## s.t_ankle   0.8524101 8.782113e-15 "Shapiro-Wilk normality test"
+    ## s.t_bicep   0.988725  0.04635486   "Shapiro-Wilk normality test"
+    ## s.t_forearm 0.9888159 0.04821288   "Shapiro-Wilk normality test"
+    ## s.t_wrist   0.9894623 0.06377029   "Shapiro-Wilk normality test"
+    ##             data.name              
+    ## s.t_age     "bf_predictors$age"    
+    ## s.t_height  "bf_predictors$height" 
+    ## s.t_neck    "bf_predictors$neck"   
+    ## s.t_abdomen "bf_predictors$abdomen"
+    ## s.t_knee    "bf_predictors$knee"   
+    ## s.t_ankle   "bf_predictors$ankle"  
+    ## s.t_bicep   "bf_predictors$bicep"  
+    ## s.t_forearm "bf_predictors$forearm"
+    ## s.t_wrist   "bf_predictors$wrist"
