@@ -83,10 +83,11 @@ summary(raw_fit)
 ```
 
 ```{r}
-bodyvf_data=body_df %>%
+bf_data=body_df %>%
 select(-weight,-hip,-chest,-thigh) 
+write_csv(bf_data,"data/bf_data.csv")
 
-mult.fit2 <- lm(bodyfat_siri ~ .,data = bodyvf_data)
+mult.fit2 <- lm(bodyfat_siri ~ .,data = bf_data)
 vif_val <- vif(mult.fit2)
 name <- str_to_title (names(vif_val))
 vifdf <- 
