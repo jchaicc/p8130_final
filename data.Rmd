@@ -114,7 +114,23 @@ body_df %>% select(-bodyfat_siri)%>%
 ```
 
 ```{r}
-bf_data = read_csv("./data/bf_data.csv")
-
+bf_data = read_csv("./data/bf_data.csv") %>%
+  janitor::clean_names()
+a <- colnames(bf_data)[2:10] 
+for (i in 1:length(a)) { 
+  sub = bf_data[a[i]][,1]   
+                        
+  hist(sub, main = paste("Hist. of", a[i], sep = " "), xlab = a[i])
+  qqnorm(sub, main = paste("Q-Q Plot of", a[i], sep = " ")) 
+  qqline(sub)           
+ 
+   if (i == 1) {
+     s.t <- shapiro.test(sub) 
+   } else {
+     s.t <- rbind(s.t, shapiro.test(sub)) 
+ }
+}
+s.t <- cbind(a, s.t)    
+s.t
 ```
 
