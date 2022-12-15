@@ -116,11 +116,32 @@ body_df %>% select(-bodyfat_siri)%>%
 ```{r}
 bf_data = read_csv("./data/bf_data.csv") 
 bf_predictors = bf_data %>% 
-  select(-bodyfat_siri)
+  select(-bodyfat_siri) %>% 
+  mutate(age = as.numeric(age),
+         height = as.numeric(height),
+         neck = as.numeric(neck),
+         abdomen = as.numeric(abdomen),
+         knee = as.numeric(knee),
+         ankle = as.numeric(ankle),
+         bicep = as.numeric(bicep),
+         forearm = as.numeric(forearm),
+         wrist = as.numeric(wrist),
+         )
+
+shapiro.test(bf_predictors$age) 
+shapiro.test(bf_predictors$height) 
+shapiro.test(bf_predictors$neck) 
+shapiro.test(bf_predictors$abdomen) 
+shapiro.test(bf_predictors$knee) 
+shapiro.test(bf_predictors$ankle) 
+shapiro.test(bf_predictors$bicep) 
+shapiro.test(bf_predictors$forearm) 
+shapiro.test(bf_predictors$wrist) 
+
 a <- colnames(bf_predictors)[1:9] 
 
 for (i in 1:length(a)) { 
-  sub = bf_predictors[a[i]][,1]   
+  sub = bf_predictors[a[i]][,1]
   
   if (i == 1) {
      s.t <- shapiro.test(sub) 
