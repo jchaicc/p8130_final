@@ -51,6 +51,7 @@ table
 body_corr=
 body_df %>% 
 cor() 
+png(height=1800,width=1800,file="plots/corr.png",type="cairo")
 corr=corrplot(cor(body_corr), 
          method = "color", 
          type = "upper",
