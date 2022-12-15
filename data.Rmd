@@ -121,12 +121,8 @@ a <- colnames(bf_predictors)[1:9]
 
 for (i in 1:length(a)) { 
   sub = bf_predictors[a[i]][,1]   
-                        
-  hist(sub, main = paste("Hist. of", a[i], sep = " "), xlab = a[i])
-  qqnorm(sub, main = paste("Q-Q Plot of", a[i], sep = " ")) 
-  qqline(sub)           
- 
-   if (i == 1) {
+  
+  if (i == 1) {
      s.t <- shapiro.test(sub) 
    } else {
      s.t <- rbind(s.t, shapiro.test(sub)) 
