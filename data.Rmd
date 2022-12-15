@@ -43,7 +43,7 @@ table=map(body_df, sum) %>%
   knitr::kable(digits = 2, 
                caption = "Descriptive statistics of continuous variables") 
 
-
+table
 ```
 
 ```{r correlation}
@@ -84,7 +84,7 @@ summary(raw_fit)
 
 ```{r}
 bf_data=body_df %>%
-select(-weight,-hip,-chest,-thigh) 
+select(-weight,-hip,-chest,-thigh) %>%view()
 write_csv(bf_data,"data/bf_data.csv")
 
 mult.fit2 <- lm(bodyfat_siri ~ .,data = bf_data)
@@ -109,5 +109,4 @@ boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
 ```{r}
 body_df%>% select(-bodyfat_siri)%>%
   funModeling::plot_num()
-
 ```
