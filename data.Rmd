@@ -10,6 +10,8 @@ library(tidyverse)
 library(knitr)
 library(readxl)
 library(corrplot)
+library(performance)
+library(car)
 ```
 
 
@@ -45,11 +47,57 @@ table=map(body_df, sum) %>%
 ```
 
 ```{r correlation}
-# check collinearity
+# check multicollinearity
+body_corr=
 body_df %>% 
-select(-bodyfat_siri) %>% 
-cor() ## Correlation coefficient
-corr=corrplot(cor(body_df), type = "upper", diag = FALSE)
+cor() 
+corr=corrplot(cor(body_corr), 
+         method = "color", 
+         type = "upper",
+         addCoef.col = "black", 
+         number.cex = 0.6,
+         diag = FALSE) 
+
+
+```
+
+```{r}
+
+#Raw VIF
+mult.fit <- lm(bodyfat_siri ~ .,data = body_df)
+vif_values <- vif(mult.fit)
+v_names <- str_to_title (names(vif_values))
+vif_df <- 
+  tibble(variable = v_names, vif = vif_values) %>%
+  mutate(variable = fct_reorder(variable,vif))
+ggplot(data = vif_df,aes(y = variable, x = vif_values)) +
+  geom_col() +
+  geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
+ theme_bw()
+```
+
+
+```{r}
+raw_fit=lm(bodyfat_siri~.,data=body_df)
+summary(raw_fit)
+```
+
+```{r}
+bodyvf_data=body_df %>%
+select(-weight,-hip,-chest,-thigh) 
+
+mult.fit2 <- lm(bodyfat_siri ~ .,data = bodyvf_data)
+vif_values <- vif(mult.fit2)
+v_names <- str_to_title (names(vif_values))
+vif_df <- 
+  tibble(variable = v_names, vif = vif_values) %>%
+  mutate(variable = fct_reorder(variable,vif))
+ggplot(data = vif_df,aes(y = variable, x = vif_values)) +
+  geom_col() +
+  geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
+  theme_bw() 
+
+
 ```
 
 ```{r  check outcome variable}
