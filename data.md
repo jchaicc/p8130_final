@@ -260,9 +260,8 @@ shapiro.test(h_trans$height)
 Although the converted p-value is less than 0.05, the normality of the
 distribution shown in the histogram is weakened, so we still use the
 untransformed value of “height” to participate in the subsequent
-calculation. Use automatic procedures (Stepwise Regression) to find a
-’best subset’of the full model. Present the results and comment on the
-following:
+calculation. Use automatic procedures to find a ’best subset’of the full
+model. Present the results and comment on the following:
 
 ``` r
 step.fit = lm(bodyfat_siri ~ ., data = bf_data)
@@ -343,6 +342,17 @@ step(step.fit, direction = "both")
     ##       wrist  
     ##    -1.85861
 
-The model we obtained is bodyfat_siri = 5.60733 + 0.07543 \* age -
-0.28925 \* height - 0.58137 \* neck + 0.77409 \* abdomen + 0.51691 \*
-forearm + -1.85861 \* wrist.
+The model we obtained by Stepwise Regression is bodyfat_siri = 5.60733 +
+0.07543 \* age - 0.28925 \* height - 0.58137 \* neck + 0.77409 \*
+abdomen + 0.51691 \* forearm + -1.85861 \* wrist. Next, we operated
+diagnostics for checking the adequacy of the regression model. Firstly,
+we assessed model assumptions by the following diagnostic plots.
+
+``` r
+fit1 = lm(bodyfat_siri ~ age + height + neck + abdomen + forearm + 
+    wrist, data = bf_data)
+par(mfrow = c(2,2))
+plot(fit1)
+```
+
+![](data_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
