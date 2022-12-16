@@ -184,10 +184,13 @@ interact_plot(inter4,pred = abdomen, modx = knee)
 
 anova(fit1,inter2)
 anova(fit1,inter3)
+<<<<<<< HEAD
 anova(fit1,inter4)
 
 
 
+=======
+>>>>>>> 9d7e032d7d13872a66a16ff5be2f7be18c4a05e3
 ```
 
 ```{r cv}
