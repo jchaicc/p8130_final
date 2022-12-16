@@ -125,50 +125,13 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
  theme_bw()
 ```
 
-
-```{r}
-bf_data = read_csv("./data/bf_data.csv") 
-bf_predictors = bf_data %>% 
-  select(-bodyfat_siri) %>% 
-  mutate(age = as.numeric(age),
-         height = as.numeric(height),
-         neck = as.numeric(neck),
-         abdomen = as.numeric(abdomen),
-         knee = as.numeric(knee),
-         ankle = as.numeric(ankle),
-         bicep = as.numeric(bicep),
-         forearm = as.numeric(forearm),
-         wrist = as.numeric(wrist),
-         )
-
-s.t_age <- shapiro.test(bf_predictors$age) 
-s.t_height <- shapiro.test(bf_predictors$height) 
-s.t_neck <- shapiro.test(bf_predictors$neck) 
-s.t_abdomen <- shapiro.test(bf_predictors$abdomen) 
-s.t_knee <- shapiro.test(bf_predictors$knee) 
-s.t_ankle <- shapiro.test(bf_predictors$ankle) 
-s.t_bicep <- shapiro.test(bf_predictors$bicep) 
-s.t_forearm <- shapiro.test(bf_predictors$forearm) 
-s.t_wrist <- shapiro.test(bf_predictors$wrist) 
-
-rbind(s.t_age, s.t_height, s.t_neck, s.t_abdomen, s.t_knee, s.t_ankle, s.t_bicep, s.t_forearm, s.t_wrist) 
-```
-
-```{r}
-h_trans = bf_predictors %>% 
-  select(2) %>%
-  exp()
-hist(h_trans[,1], main = paste("Hist. of", "height", sep = " "), xlab = "height")
-shapiro.test(h_trans$height) 
-```
-
 ```{r}
 step.fit = lm(bodyfat_siri ~ ., data = bf_data)
 step(step.fit, direction = "both")
 ```
 
 ```{r}
-fit1 = lm(bodyfat_siri ~ age + height + neck + abdomen + forearm + 
+fit1 = lm(bodyfat_siri ~ age + height + i_neck + i_abdomen + forearm + 
     wrist, data = bf_data)
 par(mfrow = c(2,2))
 plot(fit1)
