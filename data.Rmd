@@ -14,10 +14,6 @@ library(performance)
 library(car)
 library(interactions)
 library(caret)
-library(MASS)
-library(recipes)
-library(patchwork)
-library(performance)
 ```
 
 
@@ -130,7 +126,7 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
 
 ```{r}
 step.fit = lm(bodyfat_siri ~ ., data = bf_data)
-step(step.fit, direction = "both")
+stats::step(step.fit, direction = "both")
 ```
 
 ```{r}
