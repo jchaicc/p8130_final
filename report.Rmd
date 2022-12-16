@@ -46,10 +46,7 @@ The graphs showed that there were intersection points between forearm and height
 
 ## _Model Diagnostics_  
 Next, we operated diagnostics by the following diagnostic plots for checking the adequacy of the regression model.
-As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal 'band' around zero, showing no unequal error variance. *** stands out from the random pattern and causes the plot to shift downward, which makes it a potential outlier.
-According to the QQ plot, the plot is almost straight, showing a nice normality without heteroscedasticity. *** stands out again from the random pattern.
-The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance.
-In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
+As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal 'band' around zero, showing no unequal error variance. According to the QQ plot, which is almost straight, exhibiting a nice normality without heteroscedasticity. The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance. In the Residuals vs Leverage plot, 
 
 ## _Model Validation_
 
