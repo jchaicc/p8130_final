@@ -64,10 +64,11 @@ The Scale-location plot is almost a horizontal line with equally spread points, 
 In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
 
 ## _Model interaction_
-The graphs showed that there were intersection points between forearm and height, neck and height, and abdomen and knee. The graph of all the remaining paired variables showed two parallel lines. Therefore, the revised model should be bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + forearm*height + height*neck + abdomen*knee.
+The graphs showed that there were intersection points between forearm and height, i_neck and age, and age and wrist. The graph of all the remaining paired variables showed two parallel lines. Therefore, the interactions between forearm and height, i_neck and age, and abdomen and knee should be analyzed by ANOVA. The result conducted by ANOVA showed that the interaction between height and forearm had the p-value of 0.3326, the interaction between i_neck and age had the p-value of 0.01179, and the interaction between age and wrist had the p-value of 0.004206.Thus, the interactions between i_neck and age, and between age and wrist were significant, because they had the p-value larger than 0.05.
 
 
 ## _Model Validation_
+The cross validation showed that the interaction between age and i_neck had RMSE of 4.253 and R square of 0.747, and the interaction between wrist and age had RMSE of 4.224 and R square of 0.752. In order to select the lowest RMSE and highest R square, the interaction between wrist and age should be considered. 
 
 # Discussion
 
