@@ -142,8 +142,8 @@ plot(fit1)
 inter2=update(fit1, .~.+forearm*height)
 interact_plot(inter2,pred = forearm, modx = height) 
 
-inter3=update(fit1, .~.+neck*height)
-interact_plot(inter3,pred = neck, modx = height) 
+inter3=update(fit1, .~.+age*i_neck)
+interact_plot(inter3,pred = i_neck, modx = age) 
 
 inter4=update(fit1, .~.+wrist*age)
 interact_plot(inter4,pred = wrist, modx = age) 
@@ -157,42 +157,32 @@ anova(fit1,inter4)
 ```
 
 ```{r cv}
+train = trainControl(method = "cv", number = 5)
 
-model13 = train(bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + height*neck ,
-                   data = bf_data,
-                   trControl = train,
-                   method = 'lm',
-                   na.action = na.pass)
+model13 = train(bodyfat_siri ~ age + height + i_neck + i_abdomen + forearm + 
+    wrist+age*i_neck,
+data = bf_data,
+trControl = train,
+method = 'lm',
+na.action = na.pass)
+
 model13$finalModel
 print(model13)
 
-model14 = train(bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + wrist*age ,
-                   data = bf_data,
-                   trControl = train,
-                   method = 'lm',
-                   na.action = na.pass)
+model14 = train(bodyfat_siri ~ age + height + i_neck + i_abdomen + forearm + 
+    wrist+age*wrist,
+data = bf_data,
+trControl = train,
+method = 'lm',
+na.action = na.pass)
 model14$finalModel
 print(model14)
-
 ```
 
 ```{r}
-fit_adj4 = lm(formula = bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + height*neck, data = bf_data)
+fit_adj4 = lm(formula = bodyfat_siri ~ age + height + i_neck + i_abdomen + forearm + 
+    wrist + age*i_neck, data = bf_data)
 summary(fit_adj4)
 plot(fit_adj4)
 
-plot(fit_adj4, which = 4)
-
-surgOut = bf_data[-c(39,192,250),]
-fit_adj4_without=lm(formula = bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + height*neck,data=surgOut)
-par(mfrow = c(2,2))
-plot(fit_adj4_without)
-summary(fit_adj4_without)
-
-bf_data_adj= bf_data %>%
-  dplyr::select(-knee,-bicep,-ankle) %>%
-  mutate(height_neck=height*neck)
-
-glmnet(as.matrix(bf_data[2:6]), bf_data$, lambda = 1, alpha = 0)%>%
-  coef()
 ```
