@@ -16,6 +16,8 @@ library(interactions)
 library(caret)
 library(MASS)
 library(recipes)
+library(patchwork)
+library(performance)
 ```
 
 
@@ -148,6 +150,7 @@ interact_plot(inter3,pred = i_neck, modx = age)
 
 inter4=update(fit1, .~.+wrist*age)
 interact_plot(inter4,pred = wrist, modx = age) 
+
 
 anova(fit1,inter2)
 anova(fit1,inter3)
