@@ -156,18 +156,13 @@ shapiro.test(h_trans$height)
 step.fit = lm(bodyfat_siri ~ ., data = bf_data)
 step(step.fit, direction = "both")
 ```
-The model we obtained by Stepwise Regression is bodyfat_siri = 5.60733 + 0.07543 * age - 0.28925 * height - 0.58137 * neck + 0.77409 * abdomen + 0.51691 * forearm + -1.85861 * wrist.
-Next, we operated diagnostics for checking the adequacy of the regression model. Firstly, we assessed model assumptions by the following diagnostic plots.
+
 ```{r}
 fit1 = lm(bodyfat_siri ~ age + height + neck + abdomen + forearm + 
     wrist, data = bf_data)
 par(mfrow = c(2,2))
 plot(fit1)
 ```
-As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal (linear) ‘band’ around zero, showing no unequal error variance (heteroscedasticity). *** stands out from the random pattern and causes the plot to shift downward, which makes it a potential outlier.
-According to the QQ plot, the plot is almost straight, showing a nice normality. *** stands out again from the random pattern.
-The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance.
-In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
 
 ```{r}
 
