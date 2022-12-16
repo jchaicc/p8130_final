@@ -23,14 +23,14 @@ The goal of this part is to have a sense of the distribution of each variables.C
 ## _Model Selection_ 
 
 
-## _Model interaction-
+## _Model Interaction_
 
 
-### _Model Diagnostics_  (need compare?) 
+## _Model Diagnostics_  
 
 After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance, which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. VIF again?
 
-## _Cross-Validation (need compare?)_
+## _Model Validation_
 
 A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
 
@@ -52,3 +52,14 @@ As shown in the Residuals vs Fitted plot, residual values bounce around 0 and re
 According to the QQ plot, the plot is almost straight, showing a nice normality. *** stands out again from the random pattern.
 The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance.
 In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
+
+
+## _Model Interaction_
+
+## _Model Diagnostics_  
+
+## _Model Validation_
+
+# Discussion
+
+
