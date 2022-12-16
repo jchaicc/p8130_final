@@ -100,9 +100,9 @@ corrplot(cor(cor_df), type = "upper", diag = FALSE)
 mult.fit <- lm(bodyfat_siri ~ .,data = body_df)
 summary(mult.fit)
 vif_val <- vif(mult.fit)
-name <- str_to_title (names(vif_val))
+varname <- str_to_title (names(vif_val))
 vifdf <- 
-  tibble(variable = name, vif = vif_val) %>%
+  tibble(variable = varname, vif = vif_val) %>%
   mutate(variable = fct_reorder(variable,vif_val))
 ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_col() +
@@ -118,9 +118,9 @@ dplyr::select(-i_weight,-i_hip,-i_chest,-i_thigh)
 write_csv(bf_data,"data/bf_data.csv")
 mult.fit2 <- lm(bodyfat_siri ~ .,data = bf_data)
 vif_val <- vif(mult.fit2)
-name <- str_to_title (names(vif_val))
+varname <- str_to_title (names(vif_val))
 vifdf <- 
-  tibble(variable = name, vif = vif_val) %>%
+  tibble(variable = varname, vif = vif_val) %>%
   mutate(variable = fct_reorder(variable,vif_val))
 ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_col() +
