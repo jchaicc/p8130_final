@@ -15,6 +15,7 @@ library(car)
 library(interactions)
 library(caret)
 library(MASS)
+library(recipes)
 ```
 
 
@@ -137,7 +138,7 @@ par(mfrow = c(2,2))
 plot(fit1)
 ```
 
-```{r}
+```{r interaction}
 
 inter2=update(fit1, .~.+forearm*height)
 interact_plot(inter2,pred = forearm, modx = height) 
@@ -183,6 +184,18 @@ print(model14)
 fit_adj4 = lm(formula = bodyfat_siri ~ age + height + i_neck + i_abdomen + forearm + 
     wrist + age*i_neck, data = bf_data)
 summary(fit_adj4)
+par(mfrow = c(2,2))
 plot(fit_adj4)
+plot(fit_adj4,which = 4)
+
+dataout = bf_data[-c(153,175,216),]
+dataout%>%
+  mutate(bodyfat_siri=bodyfat_siri+0.1)
+mult_fit_without = lm(bodyfat_siri ~ age + height + i_neck + i_abdomen + forearm + 
+    wrist + age*i_neck, data = dataout)
+summary(mult_fit_without)
+plot(mult_fit_without)
 
 ```
+
+
