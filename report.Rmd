@@ -24,10 +24,23 @@ The goal of this part is to have a sense of the distribution of each variables.C
 In order to select the most appropriate model, we used automatic procedures (Stepwise Regression) as followed for comparison between bigger and smaller models. 
 
 ## _Model Interaction_
-To see if there are interaction effects between any two independent variables, separate regression models were graphed. If the graph showed parallel slopes, then the interaction was not significant. This interaction term should be removed. Otherwise, it should be kept. The main effects of these two variables should be taken into consideration together in the model. 
+
 
 ## _Model Diagnostics_  
 After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance, which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. 
+
+
+### _Model Diagnostics_  
+
+After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance , which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. 
+
+## _Model interaction_
+To see if there are interaction effects between any two independent variables, separate regression models were graphed. If the graph showed parallel slopes, then the interaction was not significant. This interaction term should be removed. Otherwise, it should be kept. The main effects of these two variables should be taken into consideration together in the model. 
+
+
+## _Cross-Validation_
+
+A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
 
 ## _Model Validation_
 A 5-fold cross-validation will be constructed to test the validity of the model. RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
@@ -36,25 +49,28 @@ A 5-fold cross-validation will be constructed to test the validity of the model.
 # Results
 
 ## _Data Exploratory Analysis_
-The conclusion was confirmed by the results of histograms, showing that the reciprocal transformation of the five variables "neck", "abdomen", "knee", "ankle", "bicep" mitigated their original skewed, thus exhibiting a better normal distribution. Therefore, we decided to use the transformed value of "i_neck", "i_abdomen", "i_knee", "i_ankle", "i_bicep" to participate in the subsequent calculation. 
+The conclusion was confirmed by the results of Shapiro-Wilk normality test, showing that the p-value of "height" is greater than 0.05, the p-values of "wrist" is slightly greater than 0.05, and the p-values of other predictors are smaller than 0.05. Among which, the p-values of "bicep" are "wrist" are close to 0.05 from the left.
+Therefore, I tried exponential transformations on the variables "height".
+Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened apparently, so we still use the untransformed original value of "height" to participate in the subsequent calculation. 
+
 
 ## _Model Selection_
-The model we obtained by Stepwise Regression is bodyfat_siri = 1.257e+02 + 5.425e-02 * age - 4.106e-01 * height + 6.568e+02 * i_neck - 6.876e+03 * i_abdomen + 3.315e-01 * forearm - 1.741e+00 * wrist.
+The model we obtained by Stepwise Regression is bodyfat_siri = 5.60733 + 0.07543 * age - 0.28925 * height - 0.58137 * neck + 0.77409 * abdomen + 0.51691 * forearm + -1.85861 * wrist.
 
 ## _Model Interaction_
-The graphs showed that there were intersection points between forearm and height, neck and height, and abdomen and knee. The graph of all the remaining paired variables showed two parallel lines. Therefore, the revised model should be bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + forearm*height + height*neck + abdomen*knee.
 
 ## _Model Diagnostics_  
 Next, we operated diagnostics by the following diagnostic plots for checking the adequacy of the regression model.
-As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal 'band' around zero, showing no unequal error variance. There are three observations #192, #224, #225 standing out from the random pattern, making them potential outliers.
-According to the QQ plot, which is almost straight, exhibiting a nice normality without heteroscedasticity. #192, #224, #225 still stand out again from the random pattern in the QQ plot.
+As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal 'band' around zero, showing no unequal error variance. *** stands out from the random pattern and causes the plot to shift downward, which makes it a potential outlier.
+According to the QQ plot, the plot is almost straight, showing a nice normality without heteroscedasticity. *** stands out again from the random pattern.
 The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance.
-In the Residuals vs Leverage plot, observations #153, #175, #216 appears to be outlying values with high statistics in Cook's distance D. Next, we compared the model estimates with and without the three observations. It came out that though excluding three values slightly increased R^square by 0.002, but all variables in the model turned out to be statistically significant. Therefore, we decide to exclude outliers #153, #175, #216 from our analysis.
-Overall, these plots look like this model is fitting the data well.
+In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
+
+## _Model interaction_
+The graphs showed that there were intersection points between forearm and height, neck and height, and abdomen and knee. The graph of all the remaining paired variables showed two parallel lines. Therefore, the revised model should be bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + forearm*height + height*neck + abdomen*knee.
+
 
 ## _Model Validation_
-
-bodyfat_siri = 84.7635 + 1.0080 * age -0.4150 * height + 2212.3159 * i_neck -6835.4225 * i_abdomen + 0.3344 * forearm -1.7566 * wrist -36.2415 * (age*i_neck)
 
 # Discussion
 
