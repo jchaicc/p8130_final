@@ -12,7 +12,7 @@ Body fat is an important factor in many medical situations. Measuring body fat c
 
 # Introduction
 
- A normal body fat is between 25 and 30 percent in women and 18 and 23 percent in men [1]. More than 68% of US adults are considered overweight, and 35% are obese [2]. While the number of people who are overweight or obese are gradually increasing, more people are becoming more concerned about this issue. The goal of this project is to predict the body fat in different patients based on their physical measurements. 
+A normal body fat is between 25 and 30 percent in women and 18 and 23 percent in men [1]. More than 68% of US adults are considered overweight, and 35% are obese [2]. While the number of people who are overweight or obese are gradually increasing, more people are becoming more concerned about this issue. The goal of this project is to predict the body fat in different patients based on their physical measurements. 
  
 # Methods
 
@@ -21,42 +21,36 @@ We imported the original raw dataset-body density data. Among the three target v
 The goal of this part is to have a sense of the distribution of each variables.Correlation was also considered to see whether any variables are highly correlated with eachother so that we can try to eliminate the multicollinearity effect. In order to visualize the above information, a descriptive statistics table was made, a boxplot for the target variable, histogram for the predictors, and a correlation plot. Multicollinearity will also be checked by calculating the VIF.
 
 ## _Model Selection_ 
-
+In order to select the most appropriate model, we used automatic procedures (Stepwise Regression) as followed for comparison between bigger and smaller models. 
 
 ## _Model Interaction_
 
 
 ## _Model Diagnostics_  
-
-After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance, which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. VIF again?
+After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance, which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. 
 
 ## _Model Validation_
-
-A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
+A 5-fold cross-validation will be constructed to test the validity of the model. RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
 
 # Results
 
 ## _Data Exploratory Analysis_
-
 The conclusion was confirmed by the results of Shapiro-Wilk normality test, showing that the p-value of "height" is greater than 0.05, the p-values of "wrist" is slightly greater than 0.05, and the p-values of other predictors are smaller than 0.05. Among which, the p-values of "bicep" are "wrist" are close to 0.05 from the left.
 Therefore, I tried exponential transformations on the variables "height".
 Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened apparently, so we still use the untransformed original value of "height" to participate in the subsequent calculation. 
 
 
 ## _Model Selection_
-
-In order to select the most appropriate model, we used automatic procedures as followed for comparision. 
 The model we obtained by Stepwise Regression is bodyfat_siri = 5.60733 + 0.07543 * age - 0.28925 * height - 0.58137 * neck + 0.77409 * abdomen + 0.51691 * forearm + -1.85861 * wrist.
-Next, we operated diagnostics for checking the adequacy of the regression model. Firstly, we assessed model assumptions by the following diagnostic plots.
-As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal 'band' around zero, showing no unequal error variance (heteroscedasticity). *** stands out from the random pattern and causes the plot to shift downward, which makes it a potential outlier.
-According to the QQ plot, the plot is almost straight, showing a nice normality. *** stands out again from the random pattern.
-The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance.
-In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
-
 
 ## _Model Interaction_
 
 ## _Model Diagnostics_  
+Next, we operated diagnostics by the following diagnostic plots for checking the adequacy of the regression model.
+As shown in the Residuals vs Fitted plot, residual values bounce around 0 and residuals form a generally horizontal 'band' around zero, showing no unequal error variance. *** stands out from the random pattern and causes the plot to shift downward, which makes it a potential outlier.
+According to the QQ plot, the plot is almost straight, showing a nice normality without heteroscedasticity. *** stands out again from the random pattern.
+The Scale-location plot is almost a horizontal line with equally spread points, confirming the assumption of equal variance.
+In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
 
 ## _Model Validation_
 
