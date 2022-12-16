@@ -36,11 +36,7 @@ A 5-fold cross-validation will be constructed to test the validity of the model.
 # Results
 
 ## _Data Exploratory Analysis_
-The conclusion was confirmed by the results of histograms, showing that the reciprocal transformation of the five variables mitigates the original skewed, thus exhibiting a better normal distribution.
-the p-value of "height" is greater than 0.05, the p-values of "wrist" is slightly greater than 0.05, and the p-values of other predictors are smaller than 0.05. Among which, the p-values of "bicep" are "wrist" are close to 0.05 from the left.
-Therefore, I tried exponential transformations on the variables "height".
-Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened apparently, so we still use the untransformed original value of "height" to participate in the subsequent calculation. 
-
+The conclusion was confirmed by the results of histograms, showing that the reciprocal transformation of the five variables "neck", "abdomen", "knee", "ankle", "bicep" mitigated their original skewed, thus exhibiting a better normal distribution. Therefore, we decided to use the transformed value of "i_neck", "i_abdomen", "i_knee", "i_ankle", "i_bicep" to participate in the subsequent calculation. 
 
 ## _Model Selection_
 The model we obtained by Stepwise Regression is bodyfat_siri = 1.257e+02 + 5.425e-02 * age - 4.106e-01 * height + 6.568e+02 * i_neck - 6.876e+03 * i_abdomen + 3.315e-01 * forearm - 1.741e+00 * wrist.
