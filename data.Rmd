@@ -13,6 +13,8 @@ library(corrplot)
 library(performance)
 library(car)
 library(interactions)
+library(caret)
+library(MASS)
 ```
 
 
@@ -170,19 +172,53 @@ The Scale-location plot is almost a horizontal line with equally spread points, 
 In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
 
 ```{r}
-inter1=update(fit1, . ~ . + neck*age)
-interact_plot(inter1,pred = neck, modx = age) 
 
-inter2=update(fit1, .~.+wrist*age)
-interact_plot(inter2,pred = wrist, modx = age) 
+inter2=update(fit1, .~.+forearm*height)
+interact_plot(inter2,pred = forearm, modx = height) 
 
 inter3=update(fit1, .~.+neck*height)
 interact_plot(inter3,pred = neck, modx = height) 
 
-anova(fit1,inter1)
+inter4=update(fit1, .~.+abdomen*knee)
+interact_plot(inter4,pred = abdomen, modx = knee) 
+
 anova(fit1,inter2)
 anova(fit1,inter3)
+anova(fit1,inter4)
 
 
 
+```
+
+```{r cv}
+
+model13 = train(bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + height*neck ,
+                   data = bf_data,
+                   trControl = train,
+                   method = 'lm',
+                   na.action = na.pass)
+model13$finalModel
+print(model13)
+
+model14 = train(bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + abdomen*knee ,
+                   data = bf_data,
+                   trControl = train,
+                   method = 'lm',
+                   na.action = na.pass)
+model14$finalModel
+print(model14)
+
+```
+
+```{r}
+fit_adj4 = lm(formula = bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + abdomen*knee, data = bf_data)
+summary(fit_adj4)
+plot(fit_adj4)
+
+plot(fit_adj4, which = 4)
+
+surgOut = bf_data[-c(39,192,250),]
+fit_adj4_without=lm(formula = bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + abdomen*knee,data=surgOut)
+plot(fit_adj4_without)
+summary(fit_adj4_without)
 ```
