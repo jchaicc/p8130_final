@@ -42,7 +42,7 @@ Although the converted p-value is less than 0.05, the normality of the distribut
 
 
 ## _Model Selection_
-The model we obtained by Stepwise Regression is bodyfat_siri = 84.7635 + 1.0080 * age -0.4150 * height + 2212.3159 * i_neck -6835.4225 * i_abdomen + 0.3344 * forearm -1.7566 * wrist -36.2415 * (age*i_neck).
+The model we obtained by Stepwise Regression is bodyfat_siri = 1.257e+02 + 5.425e-02 * age - 4.106e-01 * height + 6.568e+02 * i_neck - 6.876e+03 * i_abdomen + 3.315e-01 * forearm - 1.741e+00 * wrist.
 
 ## _Model Interaction_
 The graphs showed that there were intersection points between forearm and height, neck and height, and abdomen and knee. The graph of all the remaining paired variables showed two parallel lines. Therefore, the revised model should be bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + forearm*height + height*neck + abdomen*knee.
@@ -55,6 +55,8 @@ The Scale-location plot is almost a horizontal line with equally spread points, 
 In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
 
 ## _Model Validation_
+
+bodyfat_siri = 84.7635 + 1.0080 * age -0.4150 * height + 2212.3159 * i_neck -6835.4225 * i_abdomen + 0.3344 * forearm -1.7566 * wrist -36.2415 * (age*i_neck)
 
 # Discussion
 
