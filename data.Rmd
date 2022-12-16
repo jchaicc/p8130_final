@@ -182,7 +182,4 @@ interact_plot(inter3,pred = neck, modx = height)
 anova(fit1,inter1)
 anova(fit1,inter2)
 anova(fit1,inter3)
-
-
-
 ```
