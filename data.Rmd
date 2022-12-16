@@ -170,10 +170,6 @@ The Scale-location plot is almost a horizontal line with equally spread points, 
 In the Residuals vs Leverage plot, *** appears to be an outlying value at the upper right corner, being close to the edge at the Cook’s distance.So our model maybe couldn't explain *** very well.
 
 ```{r}
-inter_model <- lm(bodyfat_siri ~ (age + height + neck + abdomen + forearm + wrist), data = bf_data)
-interact_plot(update(inter_model, . ~ . + neck*age),pred = neck, modx = age) 
-
-
-
+interact_plot(update(fit1, . ~ . + neck*age),pred = neck, modx = age) 
 
 ```
