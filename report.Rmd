@@ -29,8 +29,19 @@ In order to select the most appropriate model, we used automatic procedures (Ste
 ## _Model Diagnostics_  
 After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance, which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. 
 
+<<<<<<< HEAD
+
+### _Model Diagnostics_  
+
+After obtaining the model that we have chosen, several plots will be made to check whether the model meets the regression assumptions. The QQ plot will be used to determine the normality of the data. Outliers in the data will also be identified by plotting the residuals vs leverage plot and also calculating the Cook's distance , which can show the influence of a specific case on all fitted values. Finally, a model without outliers will be shown and will be compared to the original model to examine the influence of the outliers. The influential outliers will be omitted in the final model. VIF again?
+
+## _Cross-Validation 
+
+A 5-fold cross-validation will be constructed to test the validity of the model.RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
+=======
 ## _Model Validation_
 A 5-fold cross-validation will be constructed to test the validity of the model. RMSE(root mean squared deviation), R square, and adjusted R square will be used to evaluate the model.
+>>>>>>> fa78744cb96c92c4eea228a9a08b149e3c209ef7
 
 # Results
 
