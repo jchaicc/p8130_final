@@ -42,7 +42,7 @@ Although the converted p-value is less than 0.05, the normality of the distribut
 
 
 ## _Model Selection_
-The model we obtained by Stepwise Regression is bodyfat_siri = 5.60733 + 0.07543 * age - 0.28925 * height - 0.58137 * neck + 0.77409 * abdomen + 0.51691 * forearm + -1.85861 * wrist.
+The model we obtained by Stepwise Regression is bodyfat_siri = 84.7635 + 1.0080 * age -0.4150 * height + 2212.3159 * i_neck -6835.4225 * i_abdomen + 0.3344 * forearm -1.7566 * wrist -36.2415 * (age*i_neck).
 
 ## _Model Interaction_
 The graphs showed that there were intersection points between forearm and height, neck and height, and abdomen and knee. The graph of all the remaining paired variables showed two parallel lines. Therefore, the revised model should be bodyfat_siri ~ age + height + neck + abdomen + forearm + wrist + forearm*height + height*neck + abdomen*knee.
