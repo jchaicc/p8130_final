@@ -21,7 +21,7 @@ library(MASS)
 ```{r import data}
 body_df=read_excel("data/body_density_data.xlsx") %>%
   janitor::clean_names() %>%
-  select(-bodyfat_brozek,-body_density,-id)
+  dplyr::select(-bodyfat_brozek,-body_density,-id)
 ```
 
 ```{r descriptive stat}
@@ -41,7 +41,7 @@ sum = function(variable){
 table=map(body_df, sum) %>% 
   bind_rows() %>% 
   mutate(variable = names(body_df)) %>% 
-  select(variable,everything()) %>% 
+  dplyr::select(variable,everything()) %>% 
   filter(variable!="id") %>%
   knitr::kable(digits = 2, 
                caption = "Descriptive statistics of continuous variables") 
@@ -49,19 +49,45 @@ table=map(body_df, sum) %>%
 table
 ```
 
+
+```{r  check outcome variable}
+boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
+
+```
+
+```{r}
+body_df %>% dplyr::select(-bodyfat_siri)%>%
+  funModeling::plot_num()
+```
+
+```{r}
+  body_df=body_df %>%
+  mutate(i_weight = 1/weight,
+         i_neck = 1/neck,
+         i_chest = 1/chest,
+         i_abdomen = 1/abdomen,
+         i_hip = 1/hip,
+         i_thigh = 1/thigh,
+         i_knee = 1/knee,
+         i_ankle = 1/ankle,
+         i_bicep = 1/bicep) %>%
+  dplyr::select(-weight, -neck, -chest, -abdomen,
+         -hip, -thigh, -knee, -ankle, -bicep)
+```
+
+```{r}
+body_df %>%
+  funModeling::plot_num()
+
+
+```
+
 ```{r correlation}
 # check multicollinearity
-body_corr=
-body_df %>% 
-cor() 
-png(file="plots/corr.png",type="cairo")
-corr=corrplot(cor(body_corr), 
-         method = "color", 
-         type = "upper",
-         addCoef.col = "black", 
-         number.cex = 0.6,
-         diag = FALSE) 
-
+cor_df=
+  body_df %>%
+  cor() ## Correlation coefficient
+corrplot(cor(cor_df), type = "upper", diag = FALSE)
 
 ```
 
@@ -69,6 +95,7 @@ corr=corrplot(cor(body_corr),
 
 #Raw VIF
 mult.fit <- lm(bodyfat_siri ~ .,data = body_df)
+summary(mult.fit)
 vif_val <- vif(mult.fit)
 name <- str_to_title (names(vif_val))
 vifdf <- 
@@ -79,19 +106,13 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
  theme_bw()
 
-
 ```
 
-```{r}
-raw_fit=lm(bodyfat_siri~.,data=body_df)
-summary(raw_fit)
-```
 
 ```{r}
 bf_data=body_df %>%
-select(-weight,-hip,-chest,-thigh) 
+dplyr::select(-i_weight,-i_hip,-i_chest,-i_thigh) 
 write_csv(bf_data,"data/bf_data.csv")
-
 mult.fit2 <- lm(bodyfat_siri ~ .,data = bf_data)
 vif_val <- vif(mult.fit2)
 name <- str_to_title (names(vif_val))
@@ -102,19 +123,8 @@ ggplot(data = vifdf,aes(y = variable, x = vif_val)) +
   geom_col() +
   geom_vline(xintercept = 5,colour="red",linetype = "longdash") +
  theme_bw()
-
-
 ```
 
-```{r  check outcome variable}
-boxplot(body_df$bodyfat_siri,main='Percent body fat using Siri’s equation')
-
-```
-
-```{r}
-body_df %>% select(-bodyfat_siri)%>%
-  funModeling::plot_num()
-```
 
 ```{r}
 bf_data = read_csv("./data/bf_data.csv") 
@@ -217,8 +227,9 @@ plot(fit_adj4_without)
 summary(fit_adj4_without)
 
 bf_data_adj= bf_data %>%
-  select(-knee,-bicep,-ankle) %>%
+  dplyr::select(-knee,-bicep,-ankle) %>%
   mutate(height_neck=height*neck)
 
-glmnet(as.matrix([2:6]), swiss$Fertility, lambda = 1, alpha = 0.5)
+glmnet(as.matrix(bf_data[2:6]), bf_data$, lambda = 1, alpha = 0)%>%
+  coef()
 ```
