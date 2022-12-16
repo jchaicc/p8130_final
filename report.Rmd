@@ -22,8 +22,10 @@ We imported the original raw dataset-body density data. Among the three target v
 The goal of this part is to have a sense of the distribution of each variables.Correlation was also considered to see whether any variables are highly correlated with eachother so that we can try to eliminate the multicollinearity effect. In order to visualize the above information, a descriptive statistics table was made, a boxplot for the target variable, histogram for the predictors, and a correlation plot. Multicollinearity will also be checked by calculating the VIF.
 
 ## _Model Selection_ 
-
-In order to select the most appropriate model, we applied stepwise selection for comparasion. 
+The conclusion was confirmed by the results of Shapiro-Wilk normality test, showing that the p-value of "height" is greater than 0.05, the p-values of "wrist" is slightly greater than 0.05, and the p-values of other predictors are smaller than 0.05. Among which, the p-values of "bicep" are "wrist" are close to 0.05 from the left.
+Therefore, I tried exponential transformations on the variables "height".
+Although the converted p-value is less than 0.05, the normality of the distribution shown in the histogram is weakened apparently, so we still use the untransformed original value of "height" to participate in the subsequent calculation. 
+In order to select the most appropriate model, we used automatic procedures as followed for comparasion. 
 
 ## _Model interaction-
 
