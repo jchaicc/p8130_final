@@ -68,7 +68,7 @@ The graphs showed that there were intersection points between forearm and height
 
 
 ## _Model Validation_
-
+The cross validation showed that the interaction between age and i_neck had RMSE of 4.253 and R square of 0.747, and the interaction between wrist and age had RMSE of 4.224 and R square of 0.752. In order to select the lowest RMSE and highest R square, the interaction between wrist and age should be considered. 
 
 # Discussion
 
